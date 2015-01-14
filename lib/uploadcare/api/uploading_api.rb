@@ -47,12 +47,12 @@ module Uploadcare
         UPLOADCARE_PUB_KEY: @options[:public_key],
         file: build_upload_io(file)
       }
-      
+
       uuid = response.body["file"]
 
       Uploadcare::Api::File.new self, uuid
     end
-    
+
     # create file is the same as uplaod file
     alias_method :create_file, :upload_file
 
@@ -62,16 +62,16 @@ module Uploadcare
       uri = URI.parse(url)
 
       raise ArgumentError.new 'invalid url was given' unless uri.kind_of?(URI::HTTP)
-      
+
       token = get_token(url)
 
       while !['success', 'error'].include?((response = get_status_response(token))['status'])
         sleep 0.5
       end
-      
+
       raise ArgumentError.new(response['error']) if response['status'] == 'error'
       uuid = response['file_id']
-      Uploadcare::Api::File.new self, uuid
+      # Uploadcare::Api::File.new self, uuid
     end
     alias_method :upload_from_url, :upload_url
 
