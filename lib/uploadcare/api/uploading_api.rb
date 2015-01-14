@@ -71,7 +71,7 @@ module Uploadcare
 
       raise ArgumentError.new(response['error']) if response['status'] == 'error'
       uuid = response['file_id']
-      # Uploadcare::Api::File.new self, uuid
+      Uploadcare::Api::File.new self, uuid
     end
     alias_method :upload_from_url, :upload_url
 
